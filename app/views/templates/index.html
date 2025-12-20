@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Videos con Drones{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+
+        <h1 class="hero-title">
+            <span class="hero-text-static">Capturamos momentos</span>
+            <span class="hero-text-dynamic">
+                <span class="dynamic-word active">épicos</span>
+                <span class="dynamic-word">impresionantes</span>
+                <span class="dynamic-word">únicos</span>
+                <span class="dynamic-word">cinematográficos</span>
+                <span class="dynamic-word">profesionales</span>
+            </span>
+        </h1>
+
+        <p class="hero-description">
+            Ofrecemos videografía aérea profesional para eventos, bodas, inmobiliarias y proyectos comerciales.
+            Transformamos perspectivas ordinarias en experiencias visuales extraordinarias desde el cielo.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#contact" class="btn btn-outline">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                Hablemos
+            </a>
+            <a href="#videos" class="btn btn-primary">
+                Ver nuestros trabajos
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="video-gallery" id="videos">
+    <div class="gallery-header">
+        <div class="gallery-controls">
+            <button class="carousel-btn" id="prevBtn" aria-label="Video anterior">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button class="carousel-btn" id="nextBtn" aria-label="Video siguiente">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-item">
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <video controls preload="metadata" poster="">
+                            <source src="{{ url_for('static', filename='videos/audia4test.mp4') }}" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="video-info">
+                                <h3>Audi A4 Showcase</h3>
+                                <p>Producción cinematográfica de vehículos con perspectivas aéreas dinámicas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <video controls preload="metadata" poster="">
+                            <source src="{{ url_for('static', filename='videos/life.mp4') }}" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="video-info">
+                                <h3>Life Moments</h3>
+                                <p>Capturando la esencia de la vida desde el cielo con narrativa visual</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <video controls preload="metadata" poster="">
+                            <source src="{{ url_for('static', filename='videos/motorbike.mp4') }}" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="video-info">
+                                <h3>Motorbike Action</h3>
+                                <p>Acción y velocidad capturadas con tomas aéreas de alta energía</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-indicators" id="indicators">
+        <button class="indicator active" data-index="0" aria-label="Ir al video 1"></button>
+        <button class="indicator" data-index="1" aria-label="Ir al video 2"></button>
+        <button class="indicator" data-index="2" aria-label="Ir al video 3"></button>
+    </div>
+</section>
+{% endblock %}
