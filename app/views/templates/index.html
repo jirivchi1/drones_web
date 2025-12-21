@@ -12,8 +12,7 @@
                 <span class="dynamic-word active">épicos</span>
                 <span class="dynamic-word">impresionantes</span>
                 <span class="dynamic-word">únicos</span>
-                <span class="dynamic-word">cinematográficos</span>
-                <span class="dynamic-word">profesionales</span>
+                <span class="dynamic-word">Profesionales</span>
             </span>
         </h1>
 
@@ -44,16 +43,27 @@
 
 <section class="video-gallery" id="videos">
     <div class="gallery-header">
-        <div class="gallery-controls">
-            <button class="carousel-btn" id="prevBtn" aria-label="Video anterior">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+        <div class="category-buttons">
+            <button class="category-btn active" data-category="0" aria-label="Videos deportivos">
+                <svg class="btn-border" viewBox="0 0 200 80" preserveAspectRatio="none">
+                    <rect class="border-path" width="100%" height="100%" rx="28" ry="28" fill="none" stroke-width="2"/>
                 </svg>
+                <span class="btn-gradient"></span>
+                <span class="btn-content">Deportivo</span>
             </button>
-            <button class="carousel-btn" id="nextBtn" aria-label="Video siguiente">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
+            <button class="category-btn" data-category="1" aria-label="Videos de naturaleza">
+                <svg class="btn-border" viewBox="0 0 200 80" preserveAspectRatio="none">
+                    <rect class="border-path" width="100%" height="100%" rx="28" ry="28" fill="none" stroke-width="2"/>
                 </svg>
+                <span class="btn-gradient"></span>
+                <span class="btn-content">Naturaleza</span>
+            </button>
+            <button class="category-btn" data-category="2" aria-label="Videos de carreras">
+                <svg class="btn-border" viewBox="0 0 200 80" preserveAspectRatio="none">
+                    <rect class="border-path" width="100%" height="100%" rx="28" ry="28" fill="none" stroke-width="2"/>
+                </svg>
+                <span class="btn-gradient"></span>
+                <span class="btn-content">Carrera</span>
             </button>
         </div>
     </div>
@@ -62,9 +72,9 @@
         <div class="carousel-track" id="carouselTrack">
             <div class="carousel-item">
                 <div class="video-card">
-                    <div class="video-wrapper" data-video-index="0">
+                    <div class="video-wrapper" data-video-index="0" data-category="Deportivo">
                         <video preload="metadata" poster="">
-                            <source src="{{ url_for('static', filename='videos/audia4test.mp4') }}" type="video/mp4">
+                            <source src="{{ url_for('static', filename='videos/Deportivo.mp4') }}" type="video/mp4">
                             Tu navegador no soporta el elemento de video.
                         </video>
                         <div class="play-button">
@@ -75,7 +85,7 @@
                         </div>
                         <div class="video-overlay">
                             <div class="video-info">
-                                <h3>Audi A4 Showcase</h3>
+                                <h3>Deportivo - Audi A4</h3>
                                 <p>Producción cinematográfica de vehículos con perspectivas aéreas dinámicas</p>
                             </div>
                         </div>
@@ -85,9 +95,9 @@
 
             <div class="carousel-item">
                 <div class="video-card">
-                    <div class="video-wrapper" data-video-index="1">
+                    <div class="video-wrapper" data-video-index="1" data-category="Naturaleza">
                         <video preload="metadata" poster="">
-                            <source src="{{ url_for('static', filename='videos/life.mp4') }}" type="video/mp4">
+                            <source src="{{ url_for('static', filename='videos/Naturaleza.mp4') }}" type="video/mp4">
                             Tu navegador no soporta el elemento de video.
                         </video>
                         <div class="play-button">
@@ -98,7 +108,7 @@
                         </div>
                         <div class="video-overlay">
                             <div class="video-info">
-                                <h3>Life Moments</h3>
+                                <h3>Naturaleza - Life Moments</h3>
                                 <p>Capturando la esencia de la vida desde el cielo con narrativa visual</p>
                             </div>
                         </div>
@@ -108,9 +118,9 @@
 
             <div class="carousel-item">
                 <div class="video-card">
-                    <div class="video-wrapper" data-video-index="2">
+                    <div class="video-wrapper" data-video-index="2" data-category="Carrera">
                         <video preload="metadata" poster="">
-                            <source src="{{ url_for('static', filename='videos/motorbike.mp4') }}" type="video/mp4">
+                            <source src="{{ url_for('static', filename='videos/Carrera.mp4') }}" type="video/mp4">
                             Tu navegador no soporta el elemento de video.
                         </video>
                         <div class="play-button">
@@ -121,7 +131,7 @@
                         </div>
                         <div class="video-overlay">
                             <div class="video-info">
-                                <h3>Motorbike Action</h3>
+                                <h3>Carrera - Motorbike Action</h3>
                                 <p>Acción y velocidad capturadas con tomas aéreas de alta energía</p>
                             </div>
                         </div>
@@ -131,11 +141,6 @@
         </div>
     </div>
 
-    <div class="carousel-indicators" id="indicators">
-        <button class="indicator active" data-index="0" aria-label="Ir al video 1"></button>
-        <button class="indicator" data-index="1" aria-label="Ir al video 2"></button>
-        <button class="indicator" data-index="2" aria-label="Ir al video 3"></button>
-    </div>
 </section>
 
 <section class="testimonials-section" id="testimonios">

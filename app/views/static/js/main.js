@@ -23,13 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(rotateWords, 2500);
     }
 
-    // Carrusel de videos
+    // Carrusel de videos con botones de categoría
     const track = document.getElementById('carouselTrack');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const indicators = document.querySelectorAll('.indicator');
+    const categoryBtns = document.querySelectorAll('.category-btn');
 
-    if (!track || !prevBtn || !nextBtn) return;
+    if (!track || categoryBtns.length === 0) return;
 
     let currentSlide = 0;
     const totalSlides = document.querySelectorAll('.carousel-item').length;
@@ -41,32 +39,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
         track.style.transform = `translateX(-${offset}px)`;
 
-        prevBtn.disabled = currentSlide === 0;
-        nextBtn.disabled = currentSlide >= totalSlides - 1;
-
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentSlide);
+        // Actualizar botones activos
+        categoryBtns.forEach((btn, index) => {
+            btn.classList.toggle('active', index === currentSlide);
         });
     }
 
-    prevBtn.addEventListener('click', () => {
-        if (currentSlide > 0) {
-            currentSlide--;
-            updateCarousel();
-        }
-    });
+    // Click en botones de categoría
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const categoryIndex = parseInt(btn.dataset.category);
 
-    nextBtn.addEventListener('click', () => {
-        if (currentSlide < totalSlides - 1) {
-            currentSlide++;
-            updateCarousel();
-        }
-    });
+            // Pausar video actual si está reproduciéndose
+            const currentVideo = document.querySelectorAll('.video-wrapper')[currentSlide];
+            if (currentVideo) {
+                const video = currentVideo.querySelector('video');
+                if (video && !video.paused) {
+                    video.pause();
+                    currentVideo.classList.remove('playing');
+                }
+            }
 
-    indicators.forEach(indicator => {
-        indicator.addEventListener('click', () => {
-            currentSlide = parseInt(indicator.dataset.index);
+            // Cambiar a nuevo video
+            currentSlide = categoryIndex;
             updateCarousel();
+
+            // Reproducir automáticamente el nuevo video
+            setTimeout(() => {
+                const newVideoWrapper = document.querySelectorAll('.video-wrapper')[currentSlide];
+                if (newVideoWrapper) {
+                    const newVideo = newVideoWrapper.querySelector('video');
+                    if (newVideo) {
+                        newVideo.play();
+                        newVideoWrapper.classList.add('playing');
+                    }
+                }
+            }, 600); // Esperar a que termine la animación del carrusel
         });
     });
 

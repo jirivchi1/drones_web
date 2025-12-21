@@ -206,35 +206,124 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
-.gallery-controls {
+.category-buttons {
     display: flex;
-    gap: 0.5rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.carousel-btn {
-    width: 40px;
-    height: 40px;
+.category-btn {
+    position: relative;
+    width: 160px;
+    height: 64px;
+    background: transparent;
+    border: none;
+    border-radius: 28px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.border-path {
+    stroke: #1a1a1a;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: draw-border 2s linear infinite;
+}
+
+@keyframes draw-border {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.btn-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(26, 26, 26, 0.8) 40%, transparent 60%);
     border-radius: 50%;
-    border: 1px solid #e0e0e0;
-    background: #fff;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: move-gradient 2s linear infinite;
+}
+
+@keyframes move-gradient {
+    0% {
+        transform: translate(-50%, -50%) translateX(0) translateY(0);
+    }
+    25% {
+        transform: translate(-50%, -50%) translateX(140px) translateY(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateX(140px) translateY(50px);
+    }
+    75% {
+        transform: translate(-50%, -50%) translateX(0) translateY(50px);
+    }
+    100% {
+        transform: translate(-50%, -50%) translateX(0) translateY(0);
+    }
+}
+
+.btn-content {
+    position: relative;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e0e0e0;
+    border-radius: 26px;
+    backdrop-filter: blur(10px);
+    color: #1a1a1a;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
 }
 
-.carousel-btn:hover:not(:disabled) {
-    background: #f5f5f5;
+.category-btn:hover .btn-content {
+    background: rgba(245, 245, 245, 0.95);
     border-color: #d0d0d0;
+    transform: scale(0.98);
 }
 
-.carousel-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
+.category-btn.active .btn-content {
+    background: #1a1a1a;
+    color: white;
+    border-color: #1a1a1a;
+}
+
+.category-btn.active .border-path {
+    stroke: #0ea5e9;
+    animation: draw-border-active 2s linear infinite;
+}
+
+@keyframes draw-border-active {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.category-btn.active .btn-gradient {
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.8) 40%, transparent 60%);
 }
 
 .carousel-container {
@@ -344,32 +433,22 @@ main {
     line-height: 1.5;
 }
 
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-}
-
-.indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: none;
-    background: #e0e0e0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: #1a1a1a;
-    width: 24px;
-    border-radius: 4px;
-}
-
 @media (max-width: 768px) {
     .carousel-container {
         padding: 0 1.5rem;
+    }
+
+    .category-buttons {
+        gap: 1rem;
+    }
+
+    .category-btn {
+        width: 140px;
+        height: 56px;
+    }
+
+    .btn-content {
+        font-size: 0.85rem;
     }
 }
 
