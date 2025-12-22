@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - UpFrames</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+</head>
+<body>
+    <div class="contact-page">
+        <!-- Animated Background Bubbles -->
+        <div class="bubbles-container">
+            <div class="bubble" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="bubble" style="left: 20%; animation-delay: 2s;"></div>
+            <div class="bubble" style="left: 30%; animation-delay: 4s;"></div>
+            <div class="bubble" style="left: 40%; animation-delay: 1s;"></div>
+            <div class="bubble" style="left: 50%; animation-delay: 3s;"></div>
+            <div class="bubble" style="left: 60%; animation-delay: 5s;"></div>
+            <div class="bubble" style="left: 70%; animation-delay: 2.5s;"></div>
+            <div class="bubble" style="left: 80%; animation-delay: 4.5s;"></div>
+            <div class="bubble" style="left: 90%; animation-delay: 1.5s;"></div>
+            <div class="bubble" style="left: 15%; animation-delay: 6s;"></div>
+            <div class="bubble" style="left: 75%; animation-delay: 3.5s;"></div>
+            <div class="bubble" style="left: 45%; animation-delay: 5.5s;"></div>
+        </div>
+
+        <!-- Header with Logo -->
+        <header class="contact-header">
+            <a href="{{ url_for('main.index') }}" class="logo-link">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="UpFrames Logo" class="contact-logo">
+            </a>
+        </header>
+
+        <!-- Main Content -->
+        <div class="contact-content">
+            <div class="contact-grid">
+                <!-- Left Side: Title -->
+                <div class="contact-title-section">
+                    <h1 class="contact-title">Llevamos tus momentos a nuevas alturas</h1>
+                </div>
+
+                <!-- Right Side: Contact Form -->
+                <div class="contact-form-section">
+                    <h2 class="form-title">¡Hablemos! 👋</h2>
+
+                    <!-- Contact Form -->
+                    <form class="contact-form" method="POST" action="{{ url_for('main.contact') }}">
+                        <p class="form-description">Déjanos un mensaje breve</p>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Tu nombre</label>
+                                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+34 600 000 000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Describe tu proyecto o evento</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Cuéntanos sobre tu evento, qué tipo de grabación necesitas, fecha aproximada..." required></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <p class="checkbox-label">Tipo de servicio que buscas</p>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="service_type" value="Eventos Deportivos">
+                                    <span>Eventos Deportivos</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="service_type" value="Bodas">
+                                    <span>Bodas</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="service_type" value="Inmobiliaria">
+                                    <span>Inmobiliaria</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="service_type" value="Naturaleza">
+                                    <span>Naturaleza</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="service_type" value="Publicidad">
+                                    <span>Publicidad</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="service_type" value="Cinematográfico">
+                                    <span>Cinematográfico</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="service_type" value="Otro">
+                                    <span>Otro</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
