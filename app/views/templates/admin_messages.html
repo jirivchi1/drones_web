@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Administración - Mensajes{% endblock %}
+
+{% block content %}
+<div style="max-width: 1400px; margin: 2rem auto; padding: 2rem;">
+    <!-- Header with Statistics -->
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #1a1a1a;">Panel de Administración</h1>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Total de Mensajes</div>
+                <div style="font-size: 2rem; font-weight: 700;">{{ total_messages }}</div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Mensajes No Leídos</div>
+                <div style="font-size: 2rem; font-weight: 700;">{{ unread_count }}</div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Mensajes Leídos</div>
+                <div style="font-size: 2rem; font-weight: 700;">{{ total_messages - unread_count }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div style="padding: 1rem 1.5rem; margin-bottom: 1rem; border-radius: 8px; {% if category == 'success' %}background: #d4edda; color: #155724; border: 1px solid #c3e6cb;{% else %}background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Search and Filter Bar -->
+    <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 2rem;">
+        <form method="GET" action="{{ url_for('main.admin_messages') }}" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: end;">
+            <!-- Search Input -->
+            <div style="flex: 1; min-width: 250px;">
+                <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem; font-weight: 500;">Buscar</label>
+                <input type="text"
+                       name="search"
+                       value="{{ search_query }}"
+                       placeholder="Buscar por nombre, email o mensaje..."
+                       style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;">
+            </div>
+
+            <!-- Status Filter -->
+            <div style="min-width: 180px;">
+                <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem; font-weight: 500;">Estado</label>
+                <select name="status"
+                        style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; background: white; cursor: pointer;">
+                    <option value="all" {% if filter_status == 'all' %}selected{% endif %}>Todos</option>
+                    <option value="unread" {% if filter_status == 'unread' %}selected{% endif %}>No Leídos</option>
+                    <option value="read" {% if filter_status == 'read' %}selected{% endif %}>Leídos</option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display: flex; gap: 0.5rem;">
+                <button type="submit"
+                        style="padding: 0.75rem 1.5rem; background: #1a1a1a; color: white; border: none; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                    Filtrar
+                </button>
+                <a href="{{ url_for('main.admin_messages') }}"
+                   style="padding: 0.75rem 1.5rem; background: white; color: #1a1a1a; border: 2px solid #e0e0e0; border-radius: 8px; font-weight: 500; text-decoration: none; display: inline-block; transition: all 0.3s ease;">
+                    Limpiar
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Messages List -->
+    {% if messages %}
+        <div style="margin-bottom: 1rem; color: #666;">
+            Mostrando {{ messages|length }} mensaje(s)
+        </div>
+
+        {% for msg in messages %}
+        <div style="background: white; border: 2px solid {% if msg.is_read %}#e0e0e0{% else %}#f5576c{% endif %}; border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                <div style="flex: 1;">
+                    <h3 style="font-size: 1.25rem; color: #1a1a1a; margin-bottom: 0.5rem;">
+                        {{ msg.name }}
+                        {% if not msg.is_read %}
+                        <span style="display: inline-block; padding: 0.25rem 0.75rem; background: #f5576c; color: white; border-radius: 12px; font-size: 0.75rem; margin-left: 0.5rem;">NUEVO</span>
+                        {% endif %}
+                    </h3>
+                    <p style="color: #666; font-size: 0.9rem;">
+                        📅 {{ msg.created_at.strftime('%d/%m/%Y a las %H:%M') }}
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <form method="POST" action="{{ url_for('main.mark_message_read', message_id=msg.id) }}" style="display: inline;">
+                        <button type="submit"
+                                style="padding: 0.5rem 1rem; background: {% if msg.is_read %}#6c757d{% else %}#28a745{% endif %}; color: white; border: none; border-radius: 6px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;">
+                            {% if msg.is_read %}Marcar No Leído{% else %}Marcar Leído{% endif %}
+                        </button>
+                    </form>
+
+                    <form method="POST"
+                          action="{{ url_for('main.delete_message', message_id=msg.id) }}"
+                          onsubmit="return confirm('¿Estás seguro de que quieres eliminar este mensaje?');"
+                          style="display: inline;">
+                        <button type="submit"
+                                style="padding: 0.5rem 1rem; background: #dc3545; color: white; border: none; border-radius: 6px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #f0f0f0; padding-top: 1rem; margin-top: 1rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <strong style="color: #666; font-size: 0.85rem;">📧 Email:</strong>
+                        <p style="margin-top: 0.25rem;">
+                            <a href="mailto:{{ msg.email }}" style="color: #1a77f2; text-decoration: none;">{{ msg.email }}</a>
+                        </p>
+                    </div>
+                    <div>
+                        <strong style="color: #666; font-size: 0.85rem;">📱 Teléfono:</strong>
+                        <p style="margin-top: 0.25rem;">{{ msg.phone or 'No proporcionado' }}</p>
+                    </div>
+                </div>
+
+                {% if msg.service_types %}
+                <div style="margin-bottom: 1rem;">
+                    <strong style="color: #666; font-size: 0.85rem;">🎯 Servicios solicitados:</strong>
+                    <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        {% for service in msg.service_types.split(',') %}
+                        <span style="padding: 0.25rem 0.75rem; background: #e9ecef; color: #495057; border-radius: 12px; font-size: 0.85rem;">
+                            {{ service }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div>
+                    <strong style="color: #666; font-size: 0.85rem;">💬 Mensaje:</strong>
+                    <p style="margin-top: 0.5rem; line-height: 1.6; color: #333; background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                        {{ msg.message }}
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f0f0f0; font-size: 0.8rem; color: #999;">
+                ID: {{ msg.id }}
+            </div>
+        </div>
+        {% endfor %}
+
+    {% else %}
+        <div style="text-align: center; padding: 4rem 2rem; background: #f8f9fa; border-radius: 12px;">
+            {% if search_query or filter_status != 'all' %}
+                <p style="font-size: 1.25rem; color: #666; margin-bottom: 1rem;">🔍 No se encontraron mensajes con los filtros aplicados</p>
+                <a href="{{ url_for('main.admin_messages') }}"
+                   style="display: inline-block; padding: 0.75rem 1.5rem; background: #1a1a1a; color: white; text-decoration: none; border-radius: 8px;">
+                    Ver todos los mensajes
+                </a>
+            {% else %}
+                <p style="font-size: 1.25rem; color: #666; margin-bottom: 1rem;">📭 No hay mensajes todavía</p>
+                <p style="color: #999;">
+                    Los mensajes enviados desde el formulario de contacto aparecerán aquí.
+                </p>
+                <a href="{{ url_for('main.contact') }}"
+                   style="display: inline-block; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: #1a1a1a; color: white; text-decoration: none; border-radius: 8px;">
+                    Ir al formulario de contacto
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div style="margin-top: 2rem; text-align: center;">
+        <a href="{{ url_for('main.index') }}" style="color: #666; text-decoration: none;">
+            ← Volver al inicio
+        </a>
+    </div>
+</div>
+
+<style>
+    input:focus, select:focus {
+        outline: none;
+        border-color: #1a1a1a !important;
+    }
+
+    button:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    a:hover {
+        opacity: 0.8;
+    }
+</style>
+{% endblock %}

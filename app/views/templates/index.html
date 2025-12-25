@@ -44,37 +44,26 @@
 <section class="video-gallery" id="videos">
     <div class="gallery-header">
         <div class="category-buttons">
-            <button class="category-btn active" data-category="0" aria-label="Videos deportivos">
+            {% for category in categories %}
+            <button class="category-btn {% if loop.index0 == 0 %}active{% endif %}" data-category="{{ loop.index0 }}" aria-label="Videos de {{ category }}">
                 <svg class="btn-border" viewBox="0 0 200 80" preserveAspectRatio="none">
                     <rect class="border-path" width="100%" height="100%" rx="28" ry="28" fill="none" stroke-width="2"/>
                 </svg>
                 <span class="btn-gradient"></span>
-                <span class="btn-content">Deportivo</span>
+                <span class="btn-content">{{ category }}</span>
             </button>
-            <button class="category-btn" data-category="1" aria-label="Videos de naturaleza">
-                <svg class="btn-border" viewBox="0 0 200 80" preserveAspectRatio="none">
-                    <rect class="border-path" width="100%" height="100%" rx="28" ry="28" fill="none" stroke-width="2"/>
-                </svg>
-                <span class="btn-gradient"></span>
-                <span class="btn-content">Naturaleza</span>
-            </button>
-            <button class="category-btn" data-category="2" aria-label="Videos de carreras">
-                <svg class="btn-border" viewBox="0 0 200 80" preserveAspectRatio="none">
-                    <rect class="border-path" width="100%" height="100%" rx="28" ry="28" fill="none" stroke-width="2"/>
-                </svg>
-                <span class="btn-gradient"></span>
-                <span class="btn-content">Carrera</span>
-            </button>
+            {% endfor %}
         </div>
     </div>
 
     <div class="carousel-container">
         <div class="carousel-track" id="carouselTrack">
+            {% for video in videos %}
             <div class="carousel-item">
                 <div class="video-card">
-                    <div class="video-wrapper" data-video-index="0" data-category="Deportivo">
+                    <div class="video-wrapper" data-video-index="{{ loop.index0 }}" data-category="{{ video.category }}">
                         <video preload="metadata" poster="">
-                            <source src="{{ url_for('static', filename='videos/Deportivo.mp4') }}" type="video/mp4">
+                            <source src="{{ url_for('static', filename='videos/' + video.filename) }}" type="video/mp4">
                             Tu navegador no soporta el elemento de video.
                         </video>
                         <div class="play-button">
@@ -85,59 +74,16 @@
                         </div>
                         <div class="video-overlay">
                             <div class="video-info">
-                                <h3>Deportivo - Audi A4</h3>
-                                <p>Producción cinematográfica de vehículos con perspectivas aéreas dinámicas</p>
+                                <h3>{{ video.title }}</h3>
+                                {% if video.description %}
+                                <p>{{ video.description }}</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="carousel-item">
-                <div class="video-card">
-                    <div class="video-wrapper" data-video-index="1" data-category="Naturaleza">
-                        <video preload="metadata" poster="">
-                            <source src="{{ url_for('static', filename='videos/Naturaleza.mp4') }}" type="video/mp4">
-                            Tu navegador no soporta el elemento de video.
-                        </video>
-                        <div class="play-button">
-                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-                                <circle cx="40" cy="40" r="40" fill="rgba(255,255,255,0.9)"/>
-                                <path d="M32 26L56 40L32 54V26Z" fill="#1a1a1a"/>
-                            </svg>
-                        </div>
-                        <div class="video-overlay">
-                            <div class="video-info">
-                                <h3>Naturaleza - Life Moments</h3>
-                                <p>Capturando la esencia de la vida desde el cielo con narrativa visual</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <div class="video-card">
-                    <div class="video-wrapper" data-video-index="2" data-category="Carrera">
-                        <video preload="metadata" poster="">
-                            <source src="{{ url_for('static', filename='videos/Carrera.mp4') }}" type="video/mp4">
-                            Tu navegador no soporta el elemento de video.
-                        </video>
-                        <div class="play-button">
-                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-                                <circle cx="40" cy="40" r="40" fill="rgba(255,255,255,0.9)"/>
-                                <path d="M32 26L56 40L32 54V26Z" fill="#1a1a1a"/>
-                            </svg>
-                        </div>
-                        <div class="video-overlay">
-                            <div class="video-info">
-                                <h3>Carrera - Motorbike Action</h3>
-                                <p>Acción y velocidad capturadas con tomas aéreas de alta energía</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
@@ -150,110 +96,30 @@
     </div>
 
     <div class="testimonials-container">
-        <div class="testimonials-column" id="column1">
-            <div class="testimonial-card">
-                <p>"UpFrames capturó nuestra boda de manera espectacular. Las tomas aéreas añadieron una perspectiva única e inolvidable."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150" alt="María García">
-                    <div>
-                        <div class="author-name">María García</div>
-                        <div class="author-role">Cliente Bodas</div>
-                    </div>
-                </div>
-            </div>
+        {% set column_count = 3 %}
+        {% set items_per_column = (testimonials|length / column_count)|round|int %}
 
-            <div class="testimonial-card">
-                <p>"El profesionalismo y la calidad de sus videos superaron nuestras expectativas. Altamente recomendados."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150" alt="Carlos Ruiz">
-                    <div>
-                        <div class="author-name">Carlos Ruiz</div>
-                        <div class="author-role">Evento Corporativo</div>
-                    </div>
-                </div>
-            </div>
+        {% for col_idx in range(column_count) %}
+        <div class="testimonials-column {% if col_idx == 1 %}hidden-mobile{% elif col_idx == 2 %}hidden-tablet{% endif %}" id="column{{ col_idx + 1 }}">
+            {% set start_idx = col_idx * items_per_column %}
+            {% set end_idx = start_idx + items_per_column %}
 
+            {% for testimonial in testimonials[start_idx:end_idx] %}
             <div class="testimonial-card">
-                <p>"Trabajo excepcional. Los videos aéreos de nuestra propiedad ayudaron a venderla en tiempo récord."</p>
+                <p>"{{ testimonial.content }}"</p>
                 <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150" alt="Ana Martínez">
+                    {% if testimonial.author_image_url %}
+                    <img src="{{ testimonial.author_image_url }}" alt="{{ testimonial.author_name }}">
+                    {% endif %}
                     <div>
-                        <div class="author-name">Ana Martínez</div>
-                        <div class="author-role">Agencia Inmobiliaria</div>
+                        <div class="author-name">{{ testimonial.author_name }}</div>
+                        <div class="author-role">{{ testimonial.author_role }}</div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-
-        <div class="testimonials-column hidden-mobile" id="column2">
-            <div class="testimonial-card">
-                <p>"La creatividad y atención al detalle son impresionantes. Cada toma cuenta una historia."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150" alt="Jorge López">
-                    <div>
-                        <div class="author-name">Jorge López</div>
-                        <div class="author-role">Director de Marketing</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <p>"Un servicio increíble de principio a fin. El equipo es profesional y muy talentoso."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150&h=150" alt="Laura Sánchez">
-                    <div>
-                        <div class="author-name">Laura Sánchez</div>
-                        <div class="author-role">Organizadora de Eventos</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <p>"Los videos de nuestro proyecto de construcción fueron fundamentales para atraer inversores."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150&h=150" alt="Roberto Díaz">
-                    <div>
-                        <div class="author-name">Roberto Díaz</div>
-                        <div class="author-role">Constructor</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="testimonials-column hidden-tablet" id="column3">
-            <div class="testimonial-card">
-                <p>"Capturaron la esencia de nuestro evento deportivo con tomas aéreas dinámicas y emocionantes."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150&h=150" alt="Fernando Pérez">
-                    <div>
-                        <div class="author-name">Fernando Pérez</div>
-                        <div class="author-role">Organizador Deportivo</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <p>"El resultado final fue asombroso. Exactamente lo que necesitábamos para nuestra campaña."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" alt="Patricia Romero">
-                    <div>
-                        <div class="author-name">Patricia Romero</div>
-                        <div class="author-role">Directora Creativa</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <p>"Profesionales, puntuales y con un ojo artístico excepcional. Volveremos a contratarlos."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150" alt="Miguel Ángel Torres">
-                    <div>
-                        <div class="author-name">Miguel Ángel Torres</div>
-                        <div class="author-role">Productor Audiovisual</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </section>
 {% endblock %}

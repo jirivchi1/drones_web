@@ -80,6 +80,7 @@ La aplicación estará disponible en: **http://127.0.0.1:5000**
 - Texto dinámico con palabras rotando cada 2.5 segundos
 - Animaciones suaves con efectos bounce
 - Botones de llamada a la acción
+- Iconos de redes sociales (WhatsApp, Instagram, Facebook, YouTube)
 
 ### Galería de Videos
 - Carrusel con 1 video a la vez (pantalla completa)
@@ -87,14 +88,116 @@ La aplicación estará disponible en: **http://127.0.0.1:5000**
 - Indicadores de posición (dots)
 - Overlay informativo al hacer hover
 - Bordes difuminados para integración suave
+- **Carga dinámica desde base de datos**
+- Filtrado por categorías con botones animados
+
+### Testimonios
+- Scroll infinito con múltiples columnas
+- Diseño responsive (1/2/3 columnas según dispositivo)
+- **Carga dinámica desde base de datos**
+
+### Formulario de Contacto
+- Diseño minimalista con animaciones
+- Validación de campos con Flask-WTF
+- Protección CSRF
+- Almacenamiento en base de datos SQLite
+- Notificaciones por email (Gmail/SMTP)
+
+### Panel de Administración
+- Vista de todos los mensajes de contacto
+- **Búsqueda** por nombre, email o contenido
+- **Filtrado** por estado (leído/no leído)
+- **Marcar como leído/no leído**
+- **Eliminar mensajes**
+- Estadísticas (total, leídos, no leídos)
+- Interfaz moderna con gradientes
+
+### Base de Datos y Modelos
+- SQLAlchemy ORM con SQLite
+- Modelos: ContactMessage, Video, Testimonial
+- Migraciones con Flask-Migrate
+- Script para poblar datos iniciales
+
+### Sistema de Email
+- Flask-Mail configurado
+- Soporte para Gmail, SendGrid, SMTP personalizado
+- Notificaciones automáticas al admin
+- Manejo robusto de errores
+
+### Sistema de Logging
+- Logs rotativos (10MB máx, 10 backups)
+- Niveles: INFO (app.log), ERROR (error.log)
+- Logging en todas las operaciones críticas
+
+### Testing
+- Suite de tests con pytest
+- 17 tests (unitarios e integración)
+- 85% de cobertura de código
+- Tests de modelos, rutas, formularios
+
+### Seguridad
+- CSRF protection en todos los formularios
+- Validación de inputs
+- Manejo seguro de errores
+- Páginas de error personalizadas (404, 500)
+
+## Configuración Inicial
+
+### 1. Base de Datos
+
+```bash
+# Inicializar migraciones
+flask db init
+
+# Crear migración
+flask db migrate -m "Initial migration"
+
+# Aplicar migración
+flask db upgrade
+
+# Poblar base de datos con datos iniciales
+python populate_db.py
+```
+
+### 2. Configurar Email (Opcional)
+
+Para recibir notificaciones por email, sigue la guía en:
+```
+docs/EMAIL_SETUP.md
+```
+
+Prueba tu configuración:
+```bash
+python test_email.py
+```
+
+### 3. Tests
+
+```bash
+# Ejecutar todos los tests
+pytest
+
+# Con reporte de cobertura
+pytest --cov=app --cov-report=html
+
+# Ver reporte HTML
+# Abre: htmlcov/index.html
+```
+
+## Rutas Disponibles
+
+- `/` - Página principal
+- `/contacto` - Formulario de contacto
+- `/admin/mensajes` - Panel de administración (mensajes)
 
 ## Próximas Características
 
-- [ ] Formulario de contacto
-- [ ] Página de servicios
-- [ ] Integración con backend para gestión de videos
-- [ ] Sistema de administración
+- [ ] Autenticación para panel de admin
+- [ ] Subida de videos desde el panel de admin
+- [ ] Gestión de testimonios desde el panel
+- [ ] Sistema de categorías dinámico
 - [ ] Optimización SEO
+- [ ] Analytics y métricas
 
 ## Contribuir
 

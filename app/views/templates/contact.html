@@ -1,113 +1,170 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto - UpFrames</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
-</head>
-<body>
-    <div class="contact-page">
-        <!-- Animated Background Bubbles -->
-        <div class="bubbles-container">
-            <div class="bubble" style="left: 10%; animation-delay: 0s;"></div>
-            <div class="bubble" style="left: 20%; animation-delay: 2s;"></div>
-            <div class="bubble" style="left: 30%; animation-delay: 4s;"></div>
-            <div class="bubble" style="left: 40%; animation-delay: 1s;"></div>
-            <div class="bubble" style="left: 50%; animation-delay: 3s;"></div>
-            <div class="bubble" style="left: 60%; animation-delay: 5s;"></div>
-            <div class="bubble" style="left: 70%; animation-delay: 2.5s;"></div>
-            <div class="bubble" style="left: 80%; animation-delay: 4.5s;"></div>
-            <div class="bubble" style="left: 90%; animation-delay: 1.5s;"></div>
-            <div class="bubble" style="left: 15%; animation-delay: 6s;"></div>
-            <div class="bubble" style="left: 75%; animation-delay: 3.5s;"></div>
-            <div class="bubble" style="left: 45%; animation-delay: 5.5s;"></div>
+{% extends "base.html" %}
+
+{% block title %}Contacto - UpFrames{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block body_class %}contact-page{% endblock %}
+
+{% block before_header %}
+<!-- Animated Background Bubbles -->
+<div class="bubbles-container">
+    <div class="bubble" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="bubble" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="bubble" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="bubble" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="bubble" style="left: 50%; animation-delay: 3s;"></div>
+    <div class="bubble" style="left: 60%; animation-delay: 5s;"></div>
+    <div class="bubble" style="left: 70%; animation-delay: 2.5s;"></div>
+    <div class="bubble" style="left: 80%; animation-delay: 4.5s;"></div>
+    <div class="bubble" style="left: 90%; animation-delay: 1.5s;"></div>
+    <div class="bubble" style="left: 15%; animation-delay: 6s;"></div>
+    <div class="bubble" style="left: 75%; animation-delay: 3.5s;"></div>
+    <div class="bubble" style="left: 45%; animation-delay: 5.5s;"></div>
+</div>
+{% endblock %}
+
+{% block header %}
+<!-- Header with Logo and Social Media -->
+<header class="contact-header">
+    <nav>
+        <div class="logo">
+            <a href="{{ url_for('main.index') }}" class="logo-link">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="UpFrames Logo" class="logo-img">
+            </a>
         </div>
 
-        <!-- Header with Logo -->
-        <header class="contact-header">
-            <a href="{{ url_for('main.index') }}" class="logo-link">
-                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="UpFrames Logo" class="contact-logo">
-            </a>
-        </header>
+        <!-- Social Media Icons -->
+        <ul class="social-media-list">
+            <li class="social-item">
+                <a href="https://wa.me/601429681" aria-label="WhatsApp" class="social-link" target="_blank" rel="noopener noreferrer">
+                    <div class="social-filled" style="background-color: #25D366;"></div>
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                </a>
+                <div class="social-tooltip" style="background-color: #25D366;">WhatsApp</div>
+            </li>
 
-        <!-- Main Content -->
-        <div class="contact-content">
-            <div class="contact-grid">
-                <!-- Left Side: Title -->
-                <div class="contact-title-section">
-                    <h1 class="contact-title">Llevamos tus momentos a nuevas alturas</h1>
+            <li class="social-item">
+                <a href="https://instagram.com/upframes" aria-label="Instagram" class="social-link" target="_blank" rel="noopener noreferrer">
+                    <div class="social-filled" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);"></div>
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <div class="social-tooltip" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">Instagram</div>
+            </li>
+
+            <li class="social-item">
+                <a href="https://facebook.com/upframes" aria-label="Facebook" class="social-link" target="_blank" rel="noopener noreferrer">
+                    <div class="social-filled" style="background-color: #1877F2;"></div>
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <div class="social-tooltip" style="background-color: #1877F2;">Facebook</div>
+            </li>
+
+            <li class="social-item">
+                <a href="https://youtube.com/@upframes" aria-label="YouTube" class="social-link" target="_blank" rel="noopener noreferrer">
+                    <div class="social-filled" style="background-color: #FF0000;"></div>
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+                <div class="social-tooltip" style="background-color: #FF0000;">YouTube</div>
+            </li>
+        </ul>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<!-- Main Content -->
+<div class="contact-content">
+    <div class="contact-grid">
+        <!-- Left Side: Title -->
+        <div class="contact-title-section">
+            <h1 class="contact-title">Llevamos tus momentos a nuevas alturas</h1>
+        </div>
+
+        <!-- Right Side: Contact Form -->
+        <div class="contact-form-section">
+            <h2 class="form-title">¡Hablemos! 👋</h2>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Contact Form -->
+            <form class="contact-form" method="POST" action="{{ url_for('main.contact') }}" novalidate>
+                {{ form.hidden_tag() }}
+                <p class="form-description">Déjanos un mensaje breve</p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.name.label }}
+                        {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else "")) }}
+                        {% if form.name.errors %}
+                            <div class="field-error">{{ form.name.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email.label }}
+                        {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                        {% if form.email.errors %}
+                            <div class="field-error">{{ form.email.errors[0] }}</div>
+                        {% endif %}
+                    </div>
                 </div>
 
-                <!-- Right Side: Contact Form -->
-                <div class="contact-form-section">
-                    <h2 class="form-title">¡Hablemos! 👋</h2>
-
-                    <!-- Contact Form -->
-                    <form class="contact-form" method="POST" action="{{ url_for('main.contact') }}">
-                        <p class="form-description">Déjanos un mensaje breve</p>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Tu nombre</label>
-                                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Teléfono</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+34 600 000 000">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Describe tu proyecto o evento</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Cuéntanos sobre tu evento, qué tipo de grabación necesitas, fecha aproximada..." required></textarea>
-                        </div>
-
-                        <div class="form-group checkbox-group">
-                            <p class="checkbox-label">Tipo de servicio que buscas</p>
-                            <div class="checkbox-grid">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="service_type" value="Eventos Deportivos">
-                                    <span>Eventos Deportivos</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="service_type" value="Bodas">
-                                    <span>Bodas</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="service_type" value="Inmobiliaria">
-                                    <span>Inmobiliaria</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="service_type" value="Naturaleza">
-                                    <span>Naturaleza</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="service_type" value="Publicidad">
-                                    <span>Publicidad</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="service_type" value="Cinematográfico">
-                                    <span>Cinematográfico</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="service_type" value="Otro">
-                                    <span>Otro</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-btn">Enviar mensaje</button>
-                    </form>
+                <div class="form-group">
+                    {{ form.phone.label }}
+                    {{ form.phone(class="form-control") }}
+                    {% if form.phone.errors %}
+                        <div class="field-error">{{ form.phone.errors[0] }}</div>
+                    {% endif %}
                 </div>
-            </div>
+
+                <div class="form-group">
+                    {{ form.message.label }}
+                    {{ form.message(class="form-control" + (" is-invalid" if form.message.errors else "")) }}
+                    {% if form.message.errors %}
+                        <div class="field-error">{{ form.message.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <p class="checkbox-label">{{ form.service_types.label.text }}</p>
+                    <div class="checkbox-grid">
+                        {% for value, label in form.service_types.choices %}
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="service_types" value="{{ value }}" id="service_types-{{ loop.index0 }}"
+                                {% if form.service_types.data and value in form.service_types.data %}checked{% endif %}>
+                            <span>{{ label }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    {% if form.service_types.errors %}
+                        <div class="field-error">{{ form.service_types.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar mensaje</button>
+            </form>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
