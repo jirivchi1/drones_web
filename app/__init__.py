@@ -35,6 +35,10 @@ def create_app(config_name=None):
     from app.controllers import main_controller
     app.register_blueprint(main_controller.bp)
 
+    # Register admin blueprint
+    from app.admin import admin_bp
+    app.register_blueprint(admin_bp)
+
     # Register error handlers
     register_error_handlers(app)
 

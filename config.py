@@ -29,6 +29,13 @@ class Config:
     # Application email
     ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'admin@upframes.com')
 
+    # Admin panel configuration
+    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')  # CAMBIAR EN PRODUCCIÓN!
+
+    # File upload configuration
+    UPLOAD_FOLDER = os.path.join(basedir, 'app', 'views', 'static', 'videos')
+    MAX_CONTENT_LENGTH = 500 * 1024 * 1024  # 500 MB max file size
+
 
 class DevelopmentConfig(Config):
     """Development configuration"""
