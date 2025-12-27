@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, current_app
+from flask import render_template, request, redirect, url_for, flash, current_app, make_response
 from werkzeug.utils import secure_filename
 from app.admin import admin_bp
 from app.models import Video, ContactMessage
@@ -29,9 +29,11 @@ def requires_admin(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if not check_admin_auth():
-            return render_template('admin/login.html'), 401, {
-                'WWW-Authenticate': 'Basic realm="Admin Area"'
-            }
+            # Devolver respuesta 401 con header WWW-Authenticate
+            # NO devolver HTML, solo el mensaje de autenticación requerida
+            response = make_response('Autenticación requerida', 401)
+            response.headers['WWW-Authenticate'] = 'Basic realm="Admin Area"'
+            return response
         return f(*args, **kwargs)
     return decorated
 
