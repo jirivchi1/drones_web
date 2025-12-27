@@ -215,15 +215,15 @@ def messages_list():
 
     # Aplicar filtros
     if filter_status == 'unread':
-        query = query.filter_by(read=False)
+        query = query.filter_by(is_read=False)
     elif filter_status == 'read':
-        query = query.filter_by(read=True)
+        query = query.filter_by(is_read=True)
 
     # Ordenar por fecha (más recientes primero)
     messages = query.order_by(ContactMessage.created_at.desc()).all()
 
     # Contar mensajes no leídos
-    unread_count = ContactMessage.query.filter_by(read=False).count()
+    unread_count = ContactMessage.query.filter_by(is_read=False).count()
 
     return render_template('admin/messages.html',
                          messages=messages,
@@ -237,10 +237,10 @@ def message_toggle_read(message_id):
     """Cambiar estado leído/no leído de un mensaje"""
     message = ContactMessage.query.get_or_404(message_id)
 
-    message.read = not message.read
+    message.is_read = not message.is_read
     db.session.commit()
 
-    status = 'leído' if message.read else 'no leído'
+    status = 'leído' if message.is_read else 'no leído'
     flash(f'Mensaje marcado como {status}', 'success')
 
     return redirect(url_for('admin.messages_list'))
@@ -264,7 +264,7 @@ def message_delete(message_id):
 @requires_admin
 def messages_mark_all_read():
     """Marcar todos los mensajes como leídos"""
-    ContactMessage.query.update({ContactMessage.read: True})
+    ContactMessage.query.update({ContactMessage.is_read: True})
     db.session.commit()
 
     flash('Todos los mensajes marcados como leídos', 'success')
@@ -276,7 +276,7 @@ def messages_mark_all_read():
 @requires_admin
 def messages_delete_all_read():
     """Eliminar todos los mensajes leídos"""
-    deleted_count = ContactMessage.query.filter_by(read=True).delete()
+    deleted_count = ContactMessage.query.filter_by(is_read=True).delete()
     db.session.commit()
 
     flash(f'{deleted_count} mensajes leídos eliminados exitosamente', 'success')
