@@ -6,14 +6,22 @@ from app import db
 from functools import wraps
 import os
 
-# Autenticación básica (puedes mejorarla después)
+# Autenticación básica HTTP
 def check_admin_auth():
     """Verifica si el usuario tiene acceso admin"""
-    # Por ahora, autenticación básica con contraseña
-    # TODO: Implementar sistema de login más robusto
     auth = request.authorization
-    if not auth or auth.password != current_app.config.get('ADMIN_PASSWORD', 'admin123'):
+
+    # Verificar que se proporcionó autenticación
+    if not auth:
         return False
+
+    # Verificar usuario y contraseña
+    admin_username = current_app.config.get('ADMIN_USERNAME', 'admin')
+    admin_password = current_app.config.get('ADMIN_PASSWORD', 'admin123')
+
+    if auth.username != admin_username or auth.password != admin_password:
+        return False
+
     return True
 
 def requires_admin(f):

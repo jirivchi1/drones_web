@@ -30,6 +30,7 @@ class Config:
     ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'admin@upframes.com')
 
     # Admin panel configuration
+    ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')  # Usuario admin
     ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')  # CAMBIAR EN PRODUCCIÓN!
 
     # File upload configuration
