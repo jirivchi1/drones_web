@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="300" viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Logo completo con texto (versión principal) -->
+<svg width="800" height="160" viewBox="0 0 800 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo completo con texto (versión principal - recortado) -->
   <g id="logo-complete">
     <!-- Símbolo del visor -->
-    <g id="frame-symbol">
+    <g id="frame-symbol" transform="translate(0, -30)">
       <!-- Esquina superior izquierda -->
       <path d="M 50 50 L 50 90 M 50 50 L 90 50" stroke="#00d4ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-      
+
       <!-- Esquina superior derecha -->
       <path d="M 160 50 L 120 50 M 160 50 L 160 90" stroke="#00d4ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-      
+
       <!-- Esquina inferior izquierda -->
       <path d="M 50 160 L 50 120 M 50 160 L 90 160" stroke="#00d4ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-      
+
       <!-- Esquina inferior derecha -->
       <path d="M 160 160 L 160 120 M 160 160 L 120 160" stroke="#00d4ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-      
+
       <!-- Flecha hacia arriba (centro) -->
       <path d="M 105 75 L 105 135 M 85 95 L 105 75 L 125 95" stroke="#7c3aed" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
-    
+
     <!-- Texto UpFrames -->
-    <g id="text-logo" transform="translate(210, 105)">
+    <g id="text-logo" transform="translate(210, 95)">
       <!-- Up (color púrpura) -->
       <text x="0" y="0" font-family="Arial, Helvetica, sans-serif" font-size="80" font-weight="800" fill="#7c3aed" letter-spacing="-2">Up</text>
-      
+
       <!-- Frames (color cyan) -->
       <text x="115" y="0" font-family="Arial, Helvetica, sans-serif" font-size="80" font-weight="600" fill="#00d4ff" letter-spacing="-2">Frames</text>
     </g>

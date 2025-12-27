@@ -12,13 +12,33 @@ body {
     background-image: radial-gradient(circle, rgba(150, 150, 150, 0.4) 1px, transparent 1px);
     background-size: 20px 20px;
     scroll-behavior: smooth;
+    position: relative;
+}
+
+.page-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
 }
 
 header {
     background: transparent;
-    padding: 0.5rem 2rem;
+    /* Padding reducido para header más delgado:
+       - Primer valor (0.1rem): espacio mínimo arriba/abajo
+       - Segundo valor (2rem): espacio izquierda/derecha */
+    padding: 0.1rem 2rem;
     position: relative;
     z-index: 100;
+    /* Ajusta el blur aquí:
+       - Valor actual: blur(1.5px) - muy sutil
+       - Puedes usar: blur(1px), blur(2px), blur(3px), blur(5px)
+       - Mayor valor = más difuminado */
+    backdrop-filter: blur(1.5px);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 nav {
@@ -28,7 +48,10 @@ nav {
 }
 
 .logo-img {
-    height: 120px;
+    /* Logo tamaño balanceado (SVG recortado sin espacio):
+       - Valor actual: 100px (buen balance entre visibilidad y header delgado)
+       - Puedes ajustar: 80px, 90px, 100px, 110px, 120px */
+    height: 60px;
 }
 
 main {
@@ -44,11 +67,68 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+/* Difuminado desde abajo del hero hacia trabajos */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* AJUSTE 1: Altura del difuminado desde hero
+       - Valor actual: 200px
+       - Aumenta para más transición: 250px, 300px
+       - Disminuye para menos transición: 150px, 100px */
+    height: 200px;
+    /* AJUSTE 2: Intensidad del difuminado desde hero
+       - Primer valor (0.05): opacidad final del difuminado
+       - Segundo valor (transparent): completamente transparente
+       - Aumenta primer valor para más intensidad: 0.1, 0.15, 0.2 */
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.05));
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    /* Optimización de renderizado para máxima calidad */
+    image-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    will-change: transform;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.25) 0%,
+        rgba(0, 0, 0, 0.15) 30%,
+        rgba(0, 0, 0, 0.35) 100%
+    );
+    backdrop-filter: blur(0px);
+    /* Mejorar legibilidad sin sacrificar demasiado brillo */
+    mix-blend-mode: multiply;
 }
 
 .hero-content {
     max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-badge {
@@ -84,11 +164,15 @@ main {
     font-weight: 400;
     margin-bottom: 1.5rem;
     line-height: 1.2;
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 4px 8px rgba(0, 0, 0, 0.7),
+        0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
 .hero-text-static {
     display: block;
-    color: #1a1a1a;
+    color: #ffffff;
     font-weight: 400;
 }
 
@@ -107,7 +191,7 @@ main {
     transform: translateY(100%);
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     font-weight: 600;
-    color: #1a1a1a;
+    color: #ffffff;
 }
 
 .dynamic-word.active {
@@ -123,11 +207,14 @@ main {
 .hero-description {
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #666;
+    color: #ffffff;
     margin-bottom: 2rem;
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
 .hero-buttons {
@@ -156,26 +243,29 @@ main {
 }
 
 .btn-primary {
-    background: #1a1a1a;
-    color: white;
+    background: #ffffff;
+    color: #1a1a1a;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:hover {
-    background: #000;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .btn-outline {
-    background: #ffffff;
-    color: #1a1a1a;
-    border: 1px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
 }
 
 .btn-outline:hover {
-    background: #f5f5f5;
-    border-color: #d0d0d0;
-    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -189,6 +279,23 @@ main {
 
     .logo-img {
         height: 70px;
+    }
+
+    .hero {
+        min-height: 90vh;
+    }
+
+    .hero-video {
+        object-position: center;
+    }
+
+    .hero-overlay {
+        background: linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(0, 0, 0, 0.4) 50%,
+            rgba(0, 0, 0, 0.6) 100%
+        );
     }
 
     .hero-title {
@@ -212,9 +319,34 @@ main {
 
 .video-gallery {
     padding: 5rem 0;
+    /* Fondo original con puntos grises */
     background: #ffffff;
     background-image: radial-gradient(circle, rgba(150, 150, 150, 0.4) 1px, transparent 1px);
     background-size: 20px 20px;
+    position: relative;
+}
+
+/* Difuminado desde arriba de trabajos hacia hero */
+.video-gallery::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* AJUSTE 3: Altura del difuminado desde trabajos
+       - Valor actual: 200px (debe coincidir con altura del hero::after)
+       - Aumenta para más transición: 250px, 300px
+       - Disminuye para menos transición: 150px, 100px */
+    height: 200px;
+    /* AJUSTE 4: Intensidad y color del difuminado desde trabajos
+       - Primer valor (rgba(0, 0, 0, 0.2)): negro semi-transparente
+       - Segundo valor (transparent): completamente transparente
+       - Aumenta opacidad (0.2) para más oscuro: 0.25, 0.3, 0.35
+       - Disminuye para más claro: 0.15, 0.1
+       - Cambia a blanco para efecto inverso: rgba(255, 255, 255, 0.2) */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .gallery-header {
@@ -225,6 +357,8 @@ main {
     justify-content: center;
     align-items: center;
     margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
 }
 
 .category-buttons {
@@ -352,6 +486,8 @@ main {
     padding: 0 3rem;
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    position: relative;
+    z-index: 2;
 }
 
 .carousel-track {
@@ -374,13 +510,10 @@ main {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    aspect-ratio: 21/9;
+    aspect-ratio: 16/9;
     background: transparent;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.06),
-                0 0 120px rgba(0, 0, 0, 0.03);
-}
-
-.video-wrapper {
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.12),
+                0 0 120px rgba(0, 0, 0, 0.08);
     cursor: pointer;
 }
 
@@ -388,6 +521,22 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+}
+
+/* Difuminado alrededor de los videos */
+.video-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.3),
+                inset 0 0 120px rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 5;
 }
 
 .play-button {
@@ -472,6 +621,7 @@ main {
 
 .testimonials-section {
     padding: 6rem 0;
+    /* Fondo original con puntos grises */
     background: #ffffff;
     background-image: radial-gradient(circle, rgba(150, 150, 150, 0.4) 1px, transparent 1px);
     background-size: 20px 20px;
@@ -520,6 +670,8 @@ main {
     max-height: 740px;
     mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    position: relative;
+    z-index: 1;
 }
 
 .testimonials-column {
@@ -658,14 +810,16 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3rem;
-    height: 3rem;
+    /* Tamaño reducido de iconos para header delgado */
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     overflow: hidden;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .social-link:hover {
@@ -676,8 +830,9 @@ footer {
 .social-icon {
     position: relative;
     z-index: 10;
-    width: 1.75rem;
-    height: 1.75rem;
+    /* SVG reducido proporcional al tamaño de los iconos */
+    width: 1.2rem;
+    height: 1.2rem;
     color: #1a1a1a;
     transition: color 0.3s ease-in-out;
 }

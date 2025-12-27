@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Video de fondo principal - Reducir velocidad y optimizar calidad
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo) {
+        heroVideo.playbackRate = 0.75; // 75% de velocidad (más lento)
+
+        // Forzar al navegador a usar la máxima calidad disponible
+        heroVideo.addEventListener('loadedmetadata', function() {
+            // Obtener las pistas de video disponibles
+            const videoTracks = heroVideo.videoTracks;
+            if (videoTracks && videoTracks.length > 0) {
+                // Seleccionar la pista de mayor calidad
+                for (let i = 0; i < videoTracks.length; i++) {
+                    videoTracks[i].selected = (i === videoTracks.length - 1);
+                }
+            }
+        });
+    }
+
     // Rotación de palabras en el hero
     const words = document.querySelectorAll('.dynamic-word');
 
