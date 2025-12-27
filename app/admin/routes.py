@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, current_app
 from werkzeug.utils import secure_filename
 from app.admin import admin_bp
-from app.models import Video
+from app.models import Video, ContactMessage
 from app import db
 from functools import wraps
 import os
@@ -187,3 +187,88 @@ def allowed_file(filename):
     """Verifica si el archivo tiene una extensión permitida"""
     ALLOWED_EXTENSIONS = {'mp4', 'mov', 'avi', 'webm'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# ============================================================================
+# RUTAS PARA GESTIÓN DE MENSAJES DE CONTACTO
+# ============================================================================
+
+@admin_bp.route('/mensajes')
+@requires_admin
+def messages_list():
+    """Lista todos los mensajes de contacto"""
+    # Obtener parámetros de filtro
+    filter_status = request.args.get('status', 'all')
+
+    # Construir query base
+    query = ContactMessage.query
+
+    # Aplicar filtros
+    if filter_status == 'unread':
+        query = query.filter_by(read=False)
+    elif filter_status == 'read':
+        query = query.filter_by(read=True)
+
+    # Ordenar por fecha (más recientes primero)
+    messages = query.order_by(ContactMessage.created_at.desc()).all()
+
+    # Contar mensajes no leídos
+    unread_count = ContactMessage.query.filter_by(read=False).count()
+
+    return render_template('admin/messages.html',
+                         messages=messages,
+                         filter_status=filter_status,
+                         unread_count=unread_count)
+
+
+@admin_bp.route('/mensajes/<int:message_id>/toggle-read', methods=['POST'])
+@requires_admin
+def message_toggle_read(message_id):
+    """Cambiar estado leído/no leído de un mensaje"""
+    message = ContactMessage.query.get_or_404(message_id)
+
+    message.read = not message.read
+    db.session.commit()
+
+    status = 'leído' if message.read else 'no leído'
+    flash(f'Mensaje marcado como {status}', 'success')
+
+    return redirect(url_for('admin.messages_list'))
+
+
+@admin_bp.route('/mensajes/<int:message_id>/delete', methods=['POST'])
+@requires_admin
+def message_delete(message_id):
+    """Eliminar un mensaje de contacto"""
+    message = ContactMessage.query.get_or_404(message_id)
+
+    db.session.delete(message)
+    db.session.commit()
+
+    flash(f'Mensaje de "{message.name}" eliminado exitosamente', 'success')
+
+    return redirect(url_for('admin.messages_list'))
+
+
+@admin_bp.route('/mensajes/mark-all-read', methods=['POST'])
+@requires_admin
+def messages_mark_all_read():
+    """Marcar todos los mensajes como leídos"""
+    ContactMessage.query.update({ContactMessage.read: True})
+    db.session.commit()
+
+    flash('Todos los mensajes marcados como leídos', 'success')
+
+    return redirect(url_for('admin.messages_list'))
+
+
+@admin_bp.route('/mensajes/delete-all-read', methods=['POST'])
+@requires_admin
+def messages_delete_all_read():
+    """Eliminar todos los mensajes leídos"""
+    deleted_count = ContactMessage.query.filter_by(read=True).delete()
+    db.session.commit()
+
+    flash(f'{deleted_count} mensajes leídos eliminados exitosamente', 'success')
+
+    return redirect(url_for('admin.messages_list'))

@@ -14,3 +14,4 @@ dist/
 build/
 *.egg-info/
 app/views/static/videos/
+video_background.MP4

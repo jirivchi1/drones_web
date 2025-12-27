@@ -3,7 +3,24 @@
     "allow": [
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(tree:*)",
+      "Bash(pip install:*)",
+      "Bash(flask db init:*)",
+      "Bash(flask db migrate:*)",
+      "Bash(flask db upgrade:*)",
+      "Bash(flask shell:*)",
+      "Bash(python view_contacts.py:*)",
+      "Bash(sqlite3:*)",
+      "Bash(pytest:*)",
+      "Bash(python populate_db.py:*)",
+      "Bash(sudo systemctl restart:*)",
+      "Bash(systemctl status:*)",
+      "Bash(journalctl:*)",
+      "Bash(move \"C:\\dron_website\\video_background.MP4\" \"C:\\dron_website\\app\\views\\static\\videos\\video_background.mp4\")",
+      "Bash(python check_video.py:*)",
+      "Bash(del C:dron_websiteupdate_videos.py)",
+      "Bash(python:*)"
     ]
   }
 }

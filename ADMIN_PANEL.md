@@ -1,8 +1,10 @@
-# 📹 Panel de Administración de Videos - UpFrames
+# 🎛️ Panel de Administración Completo - UpFrames
 
 ## 🚀 Acceso al Panel
 
-1. **URL del panel admin:** `http://localhost:5000/admin/videos`
+1. **URLs del panel admin:**
+   - **Gestión de Videos:** `http://localhost:5000/admin/videos`
+   - **Gestión de Mensajes:** `http://localhost:5000/admin/mensajes`
 
 2. **Credenciales de acceso:**
    - **Usuario:** `admin`
@@ -14,6 +16,8 @@
      ADMIN_PASSWORD=tu_contraseña_segura
      ```
    - O modifica `config.py` directamente
+
+**Importante:** Ambos paneles (videos y mensajes) usan la misma autenticación
 
 ## 🎬 Funcionalidades del Panel
 
@@ -133,6 +137,140 @@
 ### Olvidé la contraseña de admin
 - Edita `.env` o `config.py` para establecer una nueva
 - Reinicia el servidor Flask
+
+---
+
+# 📧 Gestión de Mensajes de Contacto
+
+## 📋 Acceso al Panel de Mensajes
+
+**URL:** `http://localhost:5000/admin/mensajes`
+
+Este panel te permite gestionar todos los mensajes recibidos a través del formulario de contacto.
+
+## 🎯 Funcionalidades
+
+### 1. Ver Lista de Mensajes
+
+- Muestra todos los mensajes ordenados por fecha (más recientes primero)
+- Cada mensaje muestra:
+  - ✉️ **Nombre** y **email** del remitente
+  - 📅 **Fecha y hora** de recepción
+  - 💬 **Mensaje** completo
+  - 📱 **Teléfono** (si lo proporcionó)
+  - 🎯 **Servicios de interés** seleccionados
+  - ● **Estado** (Nuevo/Leído)
+
+### 2. Filtrar Mensajes
+
+**Opciones de filtro:**
+- **📋 Todos:** Muestra todos los mensajes
+- **🔵 No leídos:** Solo mensajes nuevos sin leer
+- **✅ Leídos:** Solo mensajes ya revisados
+
+### 3. Marcar como Leído/No Leído
+
+**Individual:**
+1. En cada mensaje, click en "✓ Marcar como leído"
+2. Para desmarcar: "📖 Marcar como no leído"
+
+**Masivo:**
+- Botón "✓ Marcar todos como leídos" en la parte superior
+- Marca todos los mensajes del filtro actual
+
+### 4. Responder Mensajes
+
+**Pasos:**
+1. Click en "📨 Responder por email" en cualquier mensaje
+2. Se abre tu cliente de email predeterminado
+3. El email del remitente se rellena automáticamente
+4. Escribe tu respuesta y envía
+
+### 5. Eliminar Mensajes
+
+**Individual:**
+1. Click en "🗑️ Eliminar" en el mensaje
+2. Confirma la eliminación
+3. El mensaje se borra permanentemente
+
+**Masivo (solo leídos):**
+1. Click en "🗑️ Eliminar leídos" en la parte superior
+2. Confirma la acción
+3. Se eliminan todos los mensajes marcados como leídos
+
+## 💡 Contador de Mensajes Nuevos
+
+- En el título aparece un **badge rojo** con el número de mensajes no leídos
+- Ejemplo: "📧 Mensajes de Contacto **[5 nuevos]**"
+- Se actualiza automáticamente al marcar mensajes
+
+## 🎨 Indicadores Visuales
+
+### Mensajes No Leídos
+- Fondo azul claro
+- Barra azul en el lateral izquierdo
+- Badge "● Nuevo"
+
+### Mensajes Leídos
+- Fondo blanco
+- Badge "✓ Leído" en verde
+
+## 🔄 Flujo de Trabajo Recomendado
+
+1. **Revisión diaria:**
+   - Entra a `/admin/mensajes`
+   - Filtra por "🔵 No leídos"
+   - Revisa cada mensaje
+
+2. **Procesamiento:**
+   - Lee el mensaje completo
+   - Responde si es necesario usando "📨 Responder por email"
+   - Marca como leído
+
+3. **Limpieza periódica:**
+   - Una vez respondidos, los mensajes se pueden eliminar
+   - Usa "🗑️ Eliminar leídos" para limpiar en bloque
+
+## 📊 Información Capturada
+
+Cada mensaje contiene:
+
+1. **Datos del remitente:**
+   - Nombre completo
+   - Email de contacto
+   - Teléfono (opcional)
+
+2. **Mensaje:**
+   - Texto libre del cliente
+   - Consultas, solicitudes, etc.
+
+3. **Servicios de interés:**
+   - Bodas
+   - Eventos
+   - Inmobiliaria
+   - Comercial
+   - Naturaleza
+   - Deportivo
+
+4. **Metadatos:**
+   - Fecha y hora de envío
+   - Estado (leído/no leído)
+
+## 🔗 Navegación entre Paneles
+
+Desde el panel de mensajes:
+- Click en "🎥 Gestionar Videos" para ir al panel de videos
+
+Desde el panel de videos:
+- Cambia la URL a `/admin/mensajes`
+
+## 🛡️ Seguridad
+
+- **Misma autenticación** que el panel de videos
+- **CRUD completo:** Create (a través del formulario público), Read, Update (estado), Delete
+- **Sin exposición de datos sensibles:** Los mensajes solo son accesibles con credenciales de admin
+
+---
 
 ## 📞 Soporte
 

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Mensajes de Contacto | UpFrames</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .unread-badge {
+            background: #dc2626;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .flash-messages {
+            margin-bottom: 1.5rem;
+        }
+
+        .flash {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .flash-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .flash-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #374151;
+        }
+
+        .filter-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .filter-btn.active {
+            background: #7c3aed;
+            color: white;
+            border-color: #7c3aed;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .message-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .message-card.unread {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .message-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .sender-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+        }
+
+        .sender-email {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .message-date {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-unread {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-read {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .message-content {
+            margin-bottom: 1rem;
+        }
+
+        .message-text {
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .message-details {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .detail-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .detail-value {
+            color: #1a1a1a;
+        }
+
+        .service-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .service-tag {
+            padding: 0.25rem 0.75rem;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6b7280;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                📧 Mensajes de Contacto
+                {% if unread_count > 0 %}
+                    <span class="unread-badge">{{ unread_count }} nuevos</span>
+                {% endif %}
+            </h1>
+            <div class="nav-links">
+                <a href="{{ url_for('admin.videos_list') }}" class="btn btn-outline">
+                    🎥 Gestionar Videos
+                </a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="filters">
+            <a href="{{ url_for('admin.messages_list', status='all') }}"
+               class="filter-btn {% if filter_status == 'all' %}active{% endif %}">
+                📋 Todos ({{ messages|length }})
+            </a>
+            <a href="{{ url_for('admin.messages_list', status='unread') }}"
+               class="filter-btn {% if filter_status == 'unread' %}active{% endif %}">
+                🔵 No leídos ({{ unread_count }})
+            </a>
+            <a href="{{ url_for('admin.messages_list', status='read') }}"
+               class="filter-btn {% if filter_status == 'read' %}active{% endif %}">
+                ✅ Leídos
+            </a>
+
+            <div class="bulk-actions">
+                <form method="POST" action="{{ url_for('admin.messages_mark_all_read') }}"
+                      onsubmit="return confirm('¿Marcar todos como leídos?');">
+                    <button type="submit" class="btn btn-success btn-small">
+                        ✓ Marcar todos como leídos
+                    </button>
+                </form>
+                <form method="POST" action="{{ url_for('admin.messages_delete_all_read') }}"
+                      onsubmit="return confirm('¿Eliminar todos los mensajes leídos?');">
+                    <button type="submit" class="btn btn-danger btn-small">
+                        🗑️ Eliminar leídos
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {% if messages %}
+            <div class="messages-list">
+                {% for msg in messages %}
+                <div class="message-card {% if not msg.read %}unread{% endif %}">
+                    <div class="message-header">
+                        <div class="message-meta">
+                            <div>
+                                <div class="sender-name">{{ msg.name }}</div>
+                                <div class="sender-email">📧 {{ msg.email }}</div>
+                            </div>
+                            <span class="status-badge {% if msg.read %}status-read{% else %}status-unread{% endif %}">
+                                {% if msg.read %}✓ Leído{% else %}● Nuevo{% endif %}
+                            </span>
+                        </div>
+                        <div class="message-date">
+                            📅 {{ msg.created_at.strftime('%d/%m/%Y %H:%M') }}
+                        </div>
+                    </div>
+
+                    <div class="message-content">
+                        <div class="message-text">
+                            <strong>Mensaje:</strong><br>
+                            {{ msg.message }}
+                        </div>
+
+                        <div class="message-details">
+                            {% if msg.phone %}
+                            <div class="detail-item">
+                                <span class="detail-label">📱 Teléfono:</span>
+                                <span class="detail-value">{{ msg.phone }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if msg.service_types %}
+                            <div class="detail-item">
+                                <span class="detail-label">🎯 Servicios interesados:</span>
+                                <div class="service-tags">
+                                    {% for service in msg.service_types.split(',') %}
+                                        <span class="service-tag">{{ service.strip() }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="message-actions">
+                        <form method="POST" action="{{ url_for('admin.message_toggle_read', message_id=msg.id) }}">
+                            <button type="submit" class="btn btn-secondary btn-small">
+                                {% if msg.read %}
+                                    📖 Marcar como no leído
+                                {% else %}
+                                    ✓ Marcar como leído
+                                {% endif %}
+                            </button>
+                        </form>
+
+                        <a href="mailto:{{ msg.email }}?subject=Re: Contacto desde UpFrames"
+                           class="btn btn-primary btn-small">
+                            📨 Responder por email
+                        </a>
+
+                        <form method="POST" action="{{ url_for('admin.message_delete', message_id=msg.id) }}"
+                              onsubmit="return confirm('¿Estás seguro de eliminar este mensaje?');">
+                            <button type="submit" class="btn btn-danger btn-small">
+                                🗑️ Eliminar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <h2>No hay mensajes</h2>
+                <p>
+                    {% if filter_status == 'unread' %}
+                        No tienes mensajes sin leer
+                    {% elif filter_status == 'read' %}
+                        No tienes mensajes leídos
+                    {% else %}
+                        Aún no has recibido ningún mensaje de contacto
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
